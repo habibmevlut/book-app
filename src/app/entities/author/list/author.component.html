@@ -1,1 +1,77 @@
-<p>author works!</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Authors</span>
+    <div style="display: flex; justify-content: end">
+      <button mat-icon-button color="primary" (click)="showAuthorUpdateDialog()" matTooltip="Add New Author">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<mat-card *ngIf="!isLoading && (!authors || authors.length === 0)">
+  <mat-card-content>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+      <span>No data available</span>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="scrollable-content">
+  <div style="display: flex; justify-content: center; align-items: center" *ngIf="isLoading">
+    <mat-spinner diameter="70" strokeWidth="2"></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="authors" *ngIf="authors && authors.length > 0">
+    <!--Id-->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID</th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="avatar">
+      <th mat-header-cell *matHeaderCellDef> Profile</th>
+      <td mat-cell *matCellDef="let element">
+        <img *ngIf="element.avatar" [src]="element.avatar" alt="avatar"
+             style="width: 50px; height: 50px; border-radius: 50%">
+        <img *ngIf="element.avatar === null" src="assets/avatar.jpg" alt="avatar"
+             style="width: 50px; height: 50px; border-radius: 50%"/>
+
+      </td>
+    </ng-container>
+
+
+    <!--Name-->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!--Surname-->
+    <ng-container matColumnDef="surname">
+      <th mat-header-cell *matHeaderCellDef>Surname</th>
+      <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element" style="display: flex; justify-content: end">
+        <div class="btn-group flex-btn-group-container">
+          <button class="mat-primary" mat-icon-button (click)="showAuthorUpdateDialog(element)"
+                  matTooltip="Edit Item">
+            <mat-icon fontIcon="edit" color="primary"></mat-icon>
+          </button>
+
+          <button class="mat-primary" mat-icon-button (click)="delete(element)" matTooltip="Delete">
+            <mat-icon fontIcon="delete" color="warn"></mat-icon>
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

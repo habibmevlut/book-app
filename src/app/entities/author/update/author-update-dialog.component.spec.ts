@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuthorUdateDialogComponent } from './author-udate-dialog.component';
+import { AuthorUpdateDialogComponent } from './author-update-dialog.component';
 
 describe('AuthorUdateDialogComponent', () => {
-  let component: AuthorUdateDialogComponent;
-  let fixture: ComponentFixture<AuthorUdateDialogComponent>;
+  let component: AuthorUpdateDialogComponent;
+  let fixture: ComponentFixture<AuthorUpdateDialogComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AuthorUdateDialogComponent]
+      declarations: [AuthorUpdateDialogComponent]
     });
-    fixture = TestBed.createComponent(AuthorUdateDialogComponent);
+    fixture = TestBed.createComponent(AuthorUpdateDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,1 +1,71 @@
-<p>category works!</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Categories</span>
+    <div style="display: flex; justify-content: end">
+      <button mat-icon-button color="primary" (click)="showCategoryUpdateDialog()" matTooltip="Add New Color">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<mat-card *ngIf="!isLoading && (!categories || categories.length === 0)">
+  <mat-card-content>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+      <span>No data available</span>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="scrollable-content">
+  <div style="display: flex; justify-content: center; align-items: center" *ngIf="isLoading">
+    <mat-spinner diameter="70" strokeWidth="2"></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="categories" *ngIf="categories && categories.length > 0">
+    <!--Id-->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID</th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!--Name-->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!--Code-->
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef> Code</th>
+      <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+    </ng-container>
+
+    <!--Description-->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description</th>
+      <td mat-cell *matCellDef="let element">{{element.description}}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element" style="display: flex; justify-content: end">
+        <div class="btn-group flex-btn-group-container">
+          <button class="mat-primary" mat-icon-button (click)="showCategoryUpdateDialog(element)"
+                  matTooltip="Edit Item">
+            <mat-icon fontIcon="edit" color="primary"></mat-icon>
+          </button>
+
+          <button class="mat-primary" mat-icon-button (click)="delete(element)" matTooltip="Delete">
+            <mat-icon fontIcon="delete" color="warn"></mat-icon>
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

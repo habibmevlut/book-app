@@ -1,0 +1,61 @@
+<header style="display: flex; justify-content: space-between; align-items: baseline; padding: 5px 25px">
+  <h2 class="mat-h2 mb-0">Create or Edit Author</h2>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon color="primary">close</mat-icon>
+  </button>
+</header>
+
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col-lg-12">
+      <form [formGroup]="creatAndEditAuthorForm" *ngIf="creatAndEditAuthorForm">
+
+        <!--Name-->
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input name="name" id="field_name" formControlName="name" matInput required/>
+          <mat-error
+            *ngIf="creatAndEditAuthorForm.get('name')!.invalid && (creatAndEditAuthorForm.get('name')!.dirty || creatAndEditAuthorForm.get('name')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="creatAndEditAuthorForm.get('name')?.errors?.['required']">
+              This field is required.
+            </small>
+          </mat-error>
+        </mat-form-field>
+
+        <!--Surname--->
+        <mat-form-field appearance="outline">
+          <mat-label>Surname</mat-label>
+          <input name="surname" id="field_surname" formControlName="surname" matInput required/>
+          <mat-error
+            *ngIf="creatAndEditAuthorForm.get('surname')!.invalid && (creatAndEditAuthorForm.get('surname')!.dirty || creatAndEditAuthorForm.get('surname')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="creatAndEditAuthorForm.get('surname')?.errors?.['required']">
+              This field is required.
+            </small>
+          </mat-error>
+        </mat-form-field>
+
+        <!--Avatar--->
+        <mat-form-field appearance="outline">
+          <mat-label>Avatar</mat-label>
+          <input name="avatar" id="field_avatar" formControlName="avatar" matInput/>
+        </mat-form-field>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: end">
+  <button mat-dialog-close color="warn" mat-button>
+    <span>Cancel</span>
+  </button>
+  <button *ngIf="creatAndEditAuthorForm" (click)="save()" mat-stroked-button color="primary"
+          [disabled]="creatAndEditAuthorForm.invalid">
+    <span>Save</span>
+  </button>
+</div>

@@ -2,7 +2,8 @@ export interface ICategory {
   id?: number;
   name?: string;
   code?: string;
+  description?: string;
 }
 
 
-export type NewColor = Omit<ICategory, 'id'> & { id: null };
+export type NewCategory = Omit<ICategory, 'id'> & { id: null };
