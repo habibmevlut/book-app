@@ -33,9 +33,9 @@
     <ng-container matColumnDef="avatar">
       <th mat-header-cell *matHeaderCellDef> Profile</th>
       <td mat-cell *matCellDef="let element">
-        <img *ngIf="element.avatar" [src]="element.avatar" alt="avatar"
+        <img *ngIf="element.profileImage" [src]="element.profileImage" alt="avatar"
              style="width: 50px; height: 50px; border-radius: 50%">
-        <img *ngIf="element.avatar === null" src="assets/avatar.jpg" alt="avatar"
+        <img *ngIf="element.profileImage === null" src="assets/avatar.jpg" alt="avatar"
              style="width: 50px; height: 50px; border-radius: 50%"/>
 
       </td>

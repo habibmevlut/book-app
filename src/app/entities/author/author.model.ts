@@ -2,7 +2,7 @@ export interface IAuthor {
   id?: number;
   name?: string;
   surname?: string;
-  avatar?: string;
+  profileImage?: string;
 }
 
 

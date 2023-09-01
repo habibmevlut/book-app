@@ -7,6 +7,7 @@ import { EntityRoutingModule } from './entities/entity-routing.module';
 import { ApplicationConfigService } from './core/config/application-config.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BASE_API_URL } from './app.constants';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { BASE_API_URL } from './app.constants';
     BrowserModule,
     AppRoutingModule,
     EntityRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -82,7 +82,7 @@ export class CategoryComponent implements OnInit {
               }
             },
             error: () => {
-              this.uiHelperService.showSnackBarMessage('Error while deleting car');
+              this.uiHelperService.showSnackBarMessage('Error while deleting category');
             }
           })
       }

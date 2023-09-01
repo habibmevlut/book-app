@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { IBook } from '../book.model';
+import { IBook, NewBook } from '../book.model';
 import { ApplicationConfigService } from '../../../core/config/application-config.service';
 import { Observable } from 'rxjs';
+import { UIHelperService } from '../../../core/service/uihelper.service';
 
 export type EntityResponseType = HttpResponse<IBook>;
 export type EntityArrayResponseType = HttpResponse<IBook[]>;
@@ -17,13 +18,14 @@ export class BookService {
   constructor(
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
+    protected uiHelperService: UIHelperService,
   ) {
   }
 
   /**
    * Creates a book.
    */
-  create(book: IBook): Observable<EntityResponseType> {
+  create(book: NewBook): Observable<EntityResponseType> {
     return this.http.post<IBook>(this.resourceUrl, book, {observe: 'response'});
   }
 
@@ -47,7 +49,8 @@ export class BookService {
    * @param req
    */
   query(req?: any): Observable<EntityArrayResponseType> {
-    return this.http.get<IBook[]>(this.resourceUrl, {params: req, observe: 'response'});
+    const options = this.uiHelperService.createRequestOptionMultipleWithoutNull(req);
+    return this.http.get<IBook[]>(this.resourceUrl, {params: options, observe: 'response'});
   }
 
   /**

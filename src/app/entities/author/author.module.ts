@@ -13,7 +13,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthorService } from './service/author.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UIHelperService } from '../../core/service/uihelper.service';
-import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,7 +40,6 @@ const routes: Routes = [
     MatTableModule,
     MatToolbarModule,
     MatTooltipModule,
-    HttpClientModule,
     MatDialogModule,
     FormsModule,
     MatFormFieldModule,

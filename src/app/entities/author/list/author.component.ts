@@ -78,12 +78,12 @@ export class AuthorComponent implements OnInit {
           .subscribe({
             next: (res) => {
               if (res.ok) {
-                this.uiHelperService.showSnackBarMessage('Category deleted successfully');
+                this.uiHelperService.showSnackBarMessage('Author deleted successfully');
                 this.load();
               }
             },
             error: () => {
-              this.uiHelperService.showSnackBarMessage('Error while deleting car');
+              this.uiHelperService.showSnackBarMessage('Error while deleting author');
             }
           })
       }

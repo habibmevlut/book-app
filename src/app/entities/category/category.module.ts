@@ -11,7 +11,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { CategoryService } from './service/category.service';
-import { HttpClientModule } from '@angular/common/http';
 import { UIHelperService } from '../../core/service/uihelper.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -42,7 +41,6 @@ const routes: Routes = [
     MatTableModule,
     MatTooltipModule,
     MatButtonModule,
-    HttpClientModule,
     MatDialogModule,
     ReactiveFormsModule,
     MatInputModule

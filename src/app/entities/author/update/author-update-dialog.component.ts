@@ -76,7 +76,7 @@ export class AuthorUpdateDialogComponent implements OnInit {
       id: new FormControl(this.authorData?.id ?? null),
       name: new FormControl(this.authorData?.name ?? null, [Validators.required]),
       surname: new FormControl(this.authorData?.surname ?? null, [Validators.required]),
-      avatar: new FormControl(this.authorData?.avatar ?? null),
+      profileImage: new FormControl(this.authorData?.profileImage ?? null),
     });
   }
 }

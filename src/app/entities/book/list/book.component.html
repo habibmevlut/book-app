@@ -1,1 +1,78 @@
-<p>book works!</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Books</span>
+    <div style="display: flex; justify-content: end">
+      <button mat-icon-button color="primary" (click)="showBookUpdateDialog()" matTooltip="Add New Book">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="searchForm">
+  <form [formGroup]="searchForm">
+    <div class="row">
+      <div class="col-lg-2">
+        <mat-form-field appearance="outline" class="d-block">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category">
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+
+<mat-card *ngIf="!isLoading && (!books || books.length === 0)">
+  <mat-card-content>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+      <span>No data available</span>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+
+<div class="book-card-container">
+  <mat-card *ngFor="let book of books" class="book-card">
+    <!--<div class="book-cover">-->
+    <!--  <img *ngIf="book.coverImageUrl" [src]="book.coverImage
+    Url" alt="{{ book.title }} Cover">-->
+    <!--  <img *ngIf="!book.coverImageUrl" src="src/assets/book.png" alt="{{ book.title }} Cover">-->
+    <!--</div>-->
+    <img mat-card-image [src]="book.coverImageUrl" alt="{{ book.title }} Cover"
+         style="max-width: 100%; height: 250px; object-fit: cover">
+    <mat-card-content>
+      <h3>{{ book.title }}</h3>
+      <p *ngIf="book.author?.id">By {{ book.author?.name + ' ' + book.author?.surname }}</p>
+    </mat-card-content>
+
+    <mat-card-actions style="display: flex; justify-content: end">
+      <button mat-button color="warn" (click)="delete(book)">Delete</button>
+      <button mat-button color="primary" (click)="showBookUpdateDialog(book)">Edit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+
+<!--<div style="display: flex; justify-content: end">-->
+<!--  <mat-paginator *ngIf="pagingParams && pagingOpts"-->
+<!--                 (page)="setPageOpts($event)"-->
+<!--                 [pageIndex]="pagingParams.page ? pagingParams.page  : 0"-->
+<!--                 [pageSize]="pagingParams.limit ? pagingParams.limit : 10"-->
+<!--                 [pageSizeOptions]="[5, 10, 25, 100]"-->
+<!--                 [length]="pagingOpts.length ? pagingOpts.length : 0"-->
+<!--                 showFirstLastButtons>-->
+<!--  </mat-paginator>-->
+<!--  &lt;!&ndash;<mat-paginator&ndash;&gt;-->
+<!--  &lt;!&ndash;  (page)="setPageOpts($event)"&ndash;&gt;-->
+<!--  &lt;!&ndash;  [pageIndex]="currentPage"&ndash;&gt;-->
+<!--  &lt;!&ndash;  [pageSize]="itemsPerPage"&ndash;&gt;-->
+<!--  &lt;!&ndash;  [pageSizeOptions]="pageSizeOptions"&ndash;&gt;-->
+<!--  &lt;!&ndash;  [length]="totalItems"&ndash;&gt;-->
+<!--  &lt;!&ndash;  showFirstLastButtons>&ndash;&gt;-->
+<!--  &lt;!&ndash;</mat-paginator>&ndash;&gt;-->
+<!--</div>-->
