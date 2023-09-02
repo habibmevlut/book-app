@@ -10,27 +10,33 @@ import { BookService } from '../service/book.service';
 
 
 const routes: Routes = [
-  {
-    path: '',
-    component: BookComponent
-  },
-  {
-    path: ':id/detail',
-    component: BookDetailComponent,
-    data: {title: 'Book Detail'},
-    resolve: {
-      book: BookRoutingResolverService
+    {
+        path: '',
+        component: BookComponent
+    },
+    {
+        path: ':id/detail',
+        component: BookDetailComponent,
+        data: {title: 'Book Detail'},
+        resolve: {
+            book: BookRoutingResolverService
+        }
     }
-  }
 ];
 
 
 @NgModule({
-  declarations: [],
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule
-  ]
+    declarations: [],
+    imports: [
+        RouterModule.forChild(routes),
+        CommonModule
+    ],
+    providers: [
+        BookRoutingResolverService,
+        MatSnackBar,
+        UIHelperService,
+        BookService
+    ]
 })
 export class BookRoutingModule {
 }

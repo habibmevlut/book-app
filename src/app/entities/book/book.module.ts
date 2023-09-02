@@ -20,31 +20,37 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { RouterLink } from '@angular/router';
+import { TableViewComponent } from './list/table-view/table-view.component';
+import { CardViewComponent } from './list/card-view/card-view.component';
 
 
 @NgModule({
   declarations: [
     BookComponent,
     BookDetailComponent,
-    BookUpdateDialogComponent
+    BookUpdateDialogComponent,
+    TableViewComponent,
+    CardViewComponent
   ],
-  imports: [
-    BookRoutingModule,
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatListModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatSelectModule,
-    MatPaginatorModule
-  ],
+    imports: [
+        BookRoutingModule,
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatTooltipModule,
+        MatListModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatSelectModule,
+        MatPaginatorModule,
+        RouterLink
+    ],
   providers: [
     BookService,
     MatSnackBar,

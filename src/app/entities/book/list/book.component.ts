@@ -9,9 +9,8 @@ import { BookUpdateDialogComponent } from '../update/book-update-dialog.componen
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ICategory } from '../../category/category.model';
 import { CategoryService } from '../../category/service/category.service';
-import { Sort, SortDirection } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
-import { ITEMS_PER_PAGE, ITEMS_VIEW_CONTENT_COUNT, PagingParams } from '../../../app.constants';
+import { ITEMS_PER_PAGE, ITEMS_VIEW_CONTENT_COUNT } from '../../../app.constants';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-book',
@@ -22,72 +21,59 @@ export class BookComponent implements OnInit {
   isLoading = false;
   books: IBook[] = [];
   categories: ICategory[] = [];
-  displayedColumns: string[] = ['id', 'avatar', 'name', 'surname', 'actions'];
-  pagingParams: PagingParams | undefined;
-  pagingOpts: { pageSizeOptions: number[]; length?: number; sort: Sort; } | undefined;
+  currentView: 'card' | 'table' = 'card';
+
+  displayedColumns: string[] = ['id', 'coverImage', 'title', 'author', 'category', 'actions'];
   // @ts-ignore
   searchForm: FormGroup;
+  totalItems: number = 0;
+  currentPage: number = 1;
+  itemsPerPage: number = ITEMS_PER_PAGE;
+  pageSizeOptions: number[] = ITEMS_VIEW_CONTENT_COUNT;
 
   constructor(
     private bookService: BookService,
     private uiHelperService: UIHelperService,
     private matDialog: MatDialog,
     private formBuilder: FormBuilder,
-    protected categoryService: CategoryService,
-    protected activatedRoute: ActivatedRoute,
+    protected categoryService: CategoryService
   ) {
   }
 
   ngOnInit() {
-    this.initPagingOpts();
     this.initSearchForm();
     this.load();
     this.fetchCategories();
 
     this.searchForm.get('category')?.valueChanges.subscribe((value) => {
+      this.currentPage = 0;
       this.load();
     });
   }
 
-
-  initPagingOpts() {
-    /* Get query params from url */
-    const qParams = this.activatedRoute.snapshot.queryParams as PagingParams;
-    /* Set query paging params for first time */
-    this.pagingParams = {
-      page: qParams.page ? qParams.page : 1,
-      limit: qParams.limit ? qParams.limit : ITEMS_PER_PAGE,
-      sort: qParams.sort ? ([qParams.sort] as any) : ['id', 'desc'],
-    };
-    /* sort paging options */
-    this.pagingOpts = {
-      pageSizeOptions: ITEMS_VIEW_CONTENT_COUNT,
-      sort: {
-        active: this.pagingParams?.sort ? this.pagingParams.sort[0].split(',')[0] : '',
-        direction: this.pagingParams?.sort ? (this.pagingParams.sort[0].split(',')[1] as SortDirection) : '',
-      },
-    };
-  }
-
   load(): void {
+    this.isLoading = true;
     const searchData = this.searchForm.getRawValue();
     const req = {
       categoryId: searchData.category?.id ? searchData.category.id : null
     }
-    this.isLoading = true;
-    this.bookService.query(req)
-      .pipe(finalize(() => (this.isLoading = false)))
+    this.bookService.query({
+      ...req,
+      page: this.currentPage === 0 ? this.currentPage + 1 : this.currentPage,
+      limit: this.itemsPerPage,
+    })
+      .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (res) => {
           if (res.body !== null && res.body !== undefined) {
-            this.books = res.body;
+            this.books = res.body.books as IBook[];
+            this.totalItems = res.body.count as number;
           } else {
             this.books = [];
           }
         },
         error: () => {
-          this.isLoading = false;
-          this.uiHelperService.showSnackBarMessage('Error while loading categories');
+          this.uiHelperService.showSnackBarMessage('Error while loading books');
         }
       });
   }
@@ -148,9 +134,19 @@ export class BookComponent implements OnInit {
       });
   }
 
+  toggleView() {
+    this.currentView = this.currentView === 'card' ? 'table' : 'card';
+  }
+
   private initSearchForm(): void {
     this.searchForm = this.formBuilder.group({
       category: new FormControl(null),
     });
+  }
+
+  setPageOpts(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.itemsPerPage = event.pageSize;
+    this.load();
   }
 }

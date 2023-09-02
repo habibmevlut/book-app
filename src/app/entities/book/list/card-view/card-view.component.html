@@ -1,0 +1,17 @@
+<div class="book-card-container">
+    <mat-card *ngFor="let book of dataSource" class="book-card">
+        <img mat-card-image *ngIf="book.coverImageUrl" [src]="book.coverImageUrl" alt="{{ book.title }} Cover"
+             class="book-cover-img">
+        <img mat-card-image *ngIf="!book.coverImageUrl" src="assets/book.png" alt="{{ book.title }} Cover"
+             class="book-cover-img">
+        <mat-card-content>
+            <h3>{{ book.title }}</h3>
+            <p *ngIf="book.author?.id">By {{ book.author?.name + ' ' + book.author?.surname }}</p>
+        </mat-card-content>
+
+        <mat-card-actions style="display: flex; justify-content: end">
+            <button mat-button color="warn" (click)="deleteClick.emit(book)">Delete</button>
+            <button mat-button color="primary" (click)="editClick.emit(book)">Edit</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
