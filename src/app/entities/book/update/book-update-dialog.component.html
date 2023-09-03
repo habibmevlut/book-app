@@ -1,93 +1,88 @@
 <header style="display: flex; justify-content: space-between; align-items: baseline; padding: 5px 25px">
-  <h2 class="mat-h2 mb-0">Create or Edit Book</h2>
-  <button mat-icon-button mat-dialog-close>
-    <mat-icon color="primary">close</mat-icon>
-  </button>
+    <h2 class="mat-h2 mb-0">Create or Edit Book</h2>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon color="primary">close</mat-icon>
+    </button>
 </header>
-{{bookData | json}}
 <div mat-dialog-content>
-  <div class="row">
-    <div class="col-lg-12">
-      <form [formGroup]="creatAndEditBookForm" *ngIf="creatAndEditBookForm">
-        <input name="categoryId" id="field_categoryId" formControlName="categoryId"
-               [value]="creatAndEditBookForm.controls['category'].value.id" matInput
-               [hidden]="true"/>
-        <!--Title-->
-        <mat-form-field appearance="outline">
-          <mat-label>Title</mat-label>
-          <input name="title" id="field_title" formControlName="title" matInput required/>
-          <mat-error
-            *ngIf="creatAndEditBookForm.get('title')!.invalid && (creatAndEditBookForm.get('title')!.dirty || creatAndEditBookForm.get('title')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="creatAndEditBookForm.get('title')?.errors?.['required']">
-              This field is required.
-            </small>
-          </mat-error>
-        </mat-form-field>
+    <div class="row">
+        <div class="col-lg-12">
+            <form [formGroup]="creatAndEditBookForm" *ngIf="creatAndEditBookForm">
+                <mat-form-field appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <input name="title" id="field_title" formControlName="title" matInput required/>
+                    <mat-error
+                            *ngIf="creatAndEditBookForm.get('title')!.invalid && (creatAndEditBookForm.get('title')!.dirty || creatAndEditBookForm.get('title')!.touched)">
+                        <small
+                                class="form-text text-danger"
+                                *ngIf="creatAndEditBookForm.get('title')?.errors?.['required']">
+                            This field is required.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
 
-        <!--Category-->
-        <mat-form-field appearance="outline">
-          <mat-label>Category</mat-label>
-          <mat-select formControlName="category" required [compareWith]="compareCategory">
-            <mat-option [value]="null"></mat-option>
-            <mat-option *ngFor="let category of categories" [value]="category">
-              {{ category.name }}
-            </mat-option>
-          </mat-select>
+                <!--Category-->
+                <mat-form-field appearance="outline">
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="category" required [compareWith]="compareCategory">
+                        <mat-option [value]="null"></mat-option>
+                        <mat-option *ngFor="let category of categories" [value]="category">
+                            {{ category.name }}
+                        </mat-option>
+                    </mat-select>
 
-          <mat-error
-            *ngIf="creatAndEditBookForm.get('category')!.invalid && (creatAndEditBookForm.get('category')!.dirty || creatAndEditBookForm.get('category')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="creatAndEditBookForm.get('category')?.errors?.['required']">
-              This field is required.
-            </small>
-          </mat-error>
-        </mat-form-field>
+                    <mat-error
+                            *ngIf="creatAndEditBookForm.get('category')!.invalid && (creatAndEditBookForm.get('category')!.dirty || creatAndEditBookForm.get('category')!.touched)">
+                        <small
+                                class="form-text text-danger"
+                                *ngIf="creatAndEditBookForm.get('category')?.errors?.['required']">
+                            This field is required.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
 
-        <!--Author-->
-        <mat-form-field appearance="outline">
-          <mat-label>Author</mat-label>
-          <mat-select formControlName="author" required [compareWith]="compareAuthor">
-            <mat-option [value]="null"></mat-option>
-            <mat-option *ngFor="let author of authors" [value]="author">
-              {{ author.name + '   ' + author.surname }}
-            </mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="creatAndEditBookForm.get('author')!.invalid && (creatAndEditBookForm.get('author')!.dirty || creatAndEditBookForm.get('author')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="creatAndEditBookForm.get('author')?.errors?.['required']">
-              This field is required.
-            </small>
-          </mat-error>
-        </mat-form-field>
+                <!--Author-->
+                <mat-form-field appearance="outline">
+                    <mat-label>Author</mat-label>
+                    <mat-select formControlName="author" required [compareWith]="compareAuthor">
+                        <mat-option [value]="null"></mat-option>
+                        <mat-option *ngFor="let author of authors" [value]="author">
+                            {{ author.name + '   ' + author.surname }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error
+                            *ngIf="creatAndEditBookForm.get('author')!.invalid && (creatAndEditBookForm.get('author')!.dirty || creatAndEditBookForm.get('author')!.touched)">
+                        <small
+                                class="form-text text-danger"
+                                *ngIf="creatAndEditBookForm.get('author')?.errors?.['required']">
+                            This field is required.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
 
-        <!--CoverImageUrl-->
-        <mat-form-field appearance="outline">
-          <mat-label>Cover ImageUrl</mat-label>
-          <input name="coverImageUrl" id="field_coverImageUrl" formControlName="coverImageUrl" matInput/>
-        </mat-form-field>
+                <!--CoverImageUrl-->
+                <mat-form-field appearance="outline">
+                    <mat-label>Cover ImageUrl</mat-label>
+                    <input name="coverImageUrl" id="field_coverImageUrl" formControlName="coverImageUrl" matInput/>
+                </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Description</mat-label>
-          <textarea matInput rows="7" formControlName="description"></textarea>
-        </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput rows="7" formControlName="description"></textarea>
+                </mat-form-field>
 
-      </form>
+            </form>
+        </div>
+
     </div>
-
-  </div>
 </div>
 
 <div mat-dialog-actions style="display: flex; justify-content: end">
-  <button mat-dialog-close color="warn" mat-button>
-    <span>Cancel</span>
-  </button>
-  <button *ngIf="creatAndEditBookForm" (click)="save()" mat-stroked-button color="primary"
-          [disabled]="creatAndEditBookForm.invalid">
-    <span>Save</span>
-  </button>
+    <button mat-dialog-close color="warn" mat-button>
+        <span>Cancel</span>
+    </button>
+    <button *ngIf="creatAndEditBookForm" (click)="save()" mat-stroked-button color="primary"
+            [disabled]="creatAndEditBookForm.invalid">
+        <span>Save</span>
+    </button>
 </div>
