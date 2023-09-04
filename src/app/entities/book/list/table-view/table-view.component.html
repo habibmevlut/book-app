@@ -1,40 +1,40 @@
 <div class="scrollable-content">
-  <table mat-table [dataSource]="dataSource" *ngIf="dataSource && dataSource.length > 0">
+  <mat-table [dataSource]="dataSource" *ngIf="dataSource && dataSource.length > 0">
     <!--Id-->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID</th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="id">{{element.id}} </mat-cell>
     </ng-container>
 
     <!--Cover Image-->
     <ng-container matColumnDef="coverImage">
-      <th mat-header-cell *matHeaderCellDef style="display: flex; justify-content: center">Cover Image</th>
-      <td mat-cell *matCellDef="let element" style="display: flex; justify-content: center">
+      <mat-header-cell *matHeaderCellDef style="display: flex; justify-content: center">Cover Image</mat-header-cell>
+      <mat-cell *matCellDef="let element" style="display: flex; justify-content: center" data-label="coverImage">
         <img *ngIf="element.coverImageUrl" [src]="element.coverImageUrl" alt="coverImageUrl"
              style="width: 50px; height: 50px;border-radius: 10%; object-fit: cover">
         <img *ngIf="!element.coverImageUrl" src="assets/book.png" alt="coverImageUrl"
              style="width: 50px; height: 50px; border-radius: 10%"/>
-      </td>
+      </mat-cell>
     </ng-container>
 
     <!--Title-->
     <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef>Title</th>
-      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="title">{{element.title}} </mat-cell>
     </ng-container>
 
     <!--Author-->
     <ng-container matColumnDef="author">
-      <th mat-header-cell *matHeaderCellDef>Author</th>
-      <td mat-cell *matCellDef="let element">
+      <mat-header-cell *matHeaderCellDef>Author</mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="author">
         {{element?.author?.name || element?.author?.surname ? element?.author?.name + '     ' + element?.author?.surname : ''}}
-      </td>
+      </mat-cell>
     </ng-container>
 
     <!--Category-->
     <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef>Category</th>
-      <td mat-cell *matCellDef="let element">{{element.category.name}}</td>
+      <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="category">{{element.category.name}}</mat-cell>
     </ng-container>
 
     <!--Action-->
@@ -59,7 +59,7 @@
       </mat-cell>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 </div>
