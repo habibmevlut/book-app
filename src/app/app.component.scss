@@ -143,27 +143,3 @@ nav a {
 nav a:hover {
   background-color: #125699; /* Darker color on hover */
 }
-
-//.content {
-//  background-color: #007bff; /* Choose a background color */
-//  text-align: center; /* Center-align content within the div */
-//  padding: 40px; /* Add padding for better spacing */
-//  color: #ffffff; /* Text color for better readability */
-//}
-//
-//.content h1 {
-//  font-size: 36px; /* Adjust font size as needed */
-//}
-//
-//.content p {
-//  font-size: 18px; /* Adjust font size as needed */
-//}
-
-.content.home-page {
-  //background-image: url('src/assets/book.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  text-align: center;
-  color: #ffffff;
-}
