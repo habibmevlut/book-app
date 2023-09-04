@@ -2,7 +2,7 @@
 .book-cover-img {
   max-width: 100%;
   height: 250px;
-  object-fit: cover
+  //object-fit: cover
 }
 
 /* Default styling for larger screens */
@@ -14,16 +14,20 @@
 }
 
 .book-card {
-  width: calc(20% - 20px);
+  width: calc(10% - 20px);
   margin: 10px;
   border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.searchForm {
-  padding: 10px 25px 0 25px;
+.book-card:hover {
+  transform: scale(1.05);
 }
 
-@media screen and (max-width: 960px) {
+/* Apply a scale transformation on hover */
+
+@media screen and (max-width: 950px) {
   .book-card {
     width: calc(50% - 20px); /* 2 cards per row */
   }
@@ -34,4 +38,3 @@
     width: 100%; /* 1 card per row for smaller screens */
   }
 }
-

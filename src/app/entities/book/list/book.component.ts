@@ -46,7 +46,6 @@ export class BookComponent implements OnInit {
     this.fetchCategories();
 
     this.searchForm.get('category')?.valueChanges.subscribe((value) => {
-      this.currentPage = 0;
       this.load();
     });
   }
@@ -59,7 +58,7 @@ export class BookComponent implements OnInit {
     }
     this.bookService.query({
       ...req,
-      page: this.currentPage === 0 ? this.currentPage + 1 : this.currentPage,
+      page: this.currentPage,
       limit: this.itemsPerPage,
     })
       .pipe(finalize(() => this.isLoading = false))
@@ -145,7 +144,7 @@ export class BookComponent implements OnInit {
   }
 
   setPageOpts(event: PageEvent) {
-    this.currentPage = event.pageIndex;
+    this.currentPage = event.pageIndex === 0 ? 1 : event.pageIndex + 1;
     this.itemsPerPage = event.pageSize;
     this.load();
   }

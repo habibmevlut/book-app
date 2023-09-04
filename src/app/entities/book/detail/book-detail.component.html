@@ -1,2 +1,55 @@
-<p>book-detail works!</p>
-{{book | json}}
+<div class="container">
+  <button mat-icon-button color="primary" class="back-button" routerLink="/book">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="cover">
+        <img *ngIf="book?.coverImageUrl" [src]="book?.coverImageUrl"
+             style="width: 300px; height: 400px" alt="Book Cover">
+        <img *ngIf="!book?.coverImageUrl" src="assets/book.png"
+             style="width: 300px; height: 400px" alt="Book Cover">
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <div
+        class="author">{{book?.author?.name || book?.author?.surname ? book?.author?.name + '  ' + book?.author?.surname : 'Author Name'}}</div>
+      <div class="description">
+        <div *ngIf="book?.description">
+          <div [innerHTML]="book?.description"></div>
+        </div>
+        <div *ngIf="!book?.description">
+          Step into a realm where the boundaries of reality blur and the extraordinary becomes the norm. "The Chronicles
+          of Unknown Realms" is a literary masterpiece that defies conventional categorization. Written by an enigmatic
+          author known only as the Anonymous Wordsmith, this epic tale takes readers on a journey through uncharted
+          territories of the imagination.
+          <br>
+          <br>
+          In a world where the conventional rules of publishing have been transcended, the publication date remains a
+          mystery, much like the book's reclusive author. Enigma Publishing House, known for its penchant for the
+          mysterious and the extraordinary, has brought this unparalleled work to light, leaving readers with more
+          questions than answers.
+          <br>
+          <br>
+
+          ISBN, often a beacon of identification, serves as a cryptic cipher, offering no easy access to bibliographic
+          information. It's as if the book itself refuses to be confined by the constraints of traditional literature.
+          <br>
+          <br>
+
+          As for the page count, it's a number that shifts with each reading, adapting to the pace of the reader's
+          journey. The tale unfolds at its own pace, offering a different experience to each person who embarks on this
+          extraordinary adventure.
+          <br>
+          <br>
+
+          "The Chronicles of Unknown Realms" is a work of fiction that defies conventions, transcending the boundaries
+          of
+          time and space. It invites readers to explore a world where the unknown is celebrated, and every page turned
+          reveals a new mystery. With its cryptic details and elusive nature, this book invites readers to become
+          explorers of the unknown, charting their own course through the uncharted realms of the imagination.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
