@@ -60,3 +60,15 @@ body {
 .back-button i {
   margin-right: 5px; /* Add space between the icon and text */
 }
+
+@media screen and (max-width: 2000px) {
+  .container {
+    max-width: 90vw;
+    height: auto;
+  }
+
+  .cover img {
+    width: 100%; /* Make the image fill the card's width in responsive mode */
+    max-width: none; /* Remove the max-width constraint */
+  }
+}

@@ -5,10 +5,8 @@
   <div class="row">
     <div class="col-md-4">
       <mat-card class="cover">
-        <img *ngIf="book?.coverImageUrl" [src]="book?.coverImageUrl"
-             style="width: 300px; height: 400px" alt="Book Cover">
-        <img *ngIf="!book?.coverImageUrl" src="assets/book.png"
-             style="width: 300px; height: 400px" alt="Book Cover">
+        <img *ngIf="book?.coverImageUrl" [src]="book?.coverImageUrl" alt="Book Cover">
+        <img *ngIf="!book?.coverImageUrl" src="assets/book.png" alt="Book Cover">
       </mat-card>
     </div>
     <div class="col-md-8">
