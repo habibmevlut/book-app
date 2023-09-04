@@ -12,8 +12,21 @@
       </mat-card>
     </div>
     <div class="col-md-8">
-      <div
-        class="author">{{book?.author?.name || book?.author?.surname ? book?.author?.name + '  ' + book?.author?.surname : 'Author Name'}}</div>
+      <div class="author">
+        <img *ngIf="book?.author?.profileImage" [src]="book?.author?.profileImage"
+             style="width: 50px; height: 50px; border-radius: 50%;" alt="Author Image">
+        {{ book?.author?.name || book?.author?.surname ? book?.author?.name + ' ' + book?.author?.surname : 'Author Name'}}
+      </div>
+      <div class="title">
+        {{ book?.title || 'Book Title' }}
+      </div>
+      <div class="category">
+        <span>Category:</span>
+        {{ book?.category?.name || 'Uncategorized' }}
+      </div>
+      <div class="category-description">
+        {{ book?.category?.description || 'No category description available.' }}
+      </div>
       <div class="description">
         <div *ngIf="book?.description">
           <div [innerHTML]="book?.description"></div>
@@ -29,25 +42,6 @@
           mystery, much like the book's reclusive author. Enigma Publishing House, known for its penchant for the
           mysterious and the extraordinary, has brought this unparalleled work to light, leaving readers with more
           questions than answers.
-          <br>
-          <br>
-
-          ISBN, often a beacon of identification, serves as a cryptic cipher, offering no easy access to bibliographic
-          information. It's as if the book itself refuses to be confined by the constraints of traditional literature.
-          <br>
-          <br>
-
-          As for the page count, it's a number that shifts with each reading, adapting to the pace of the reader's
-          journey. The tale unfolds at its own pace, offering a different experience to each person who embarks on this
-          extraordinary adventure.
-          <br>
-          <br>
-
-          "The Chronicles of Unknown Realms" is a work of fiction that defies conventions, transcending the boundaries
-          of
-          time and space. It invites readers to explore a world where the unknown is celebrated, and every page turned
-          reveals a new mystery. With its cryptic details and elusive nature, this book invites readers to become
-          explorers of the unknown, charting their own course through the uncharted realms of the imagination.
         </div>
       </div>
     </div>
