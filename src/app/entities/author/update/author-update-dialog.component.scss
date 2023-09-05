@@ -4,3 +4,21 @@
     margin: 2px 2px;
   }
 }
+
+/* Center the container both horizontally and vertically */
+.author-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* Optional: Add spacing below the image */
+}
+
+/* Style for the author's profile image */
+.author-profile-image {
+  width: 150px; /* Adjust the width as needed */
+  height: 150px; /* Adjust the height as needed */
+  border-radius: 50%; /* Make it a circular image */
+  border: 2px solid #007bff; /* Add a border with a custom color (e.g., blue) */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow for depth */
+  /* Optional: Add any other styles you desire */
+}
