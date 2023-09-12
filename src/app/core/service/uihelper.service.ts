@@ -56,9 +56,14 @@ export class UIHelperService {
   };
 
 
+  /**
+   * Creates http parameters from the entered object.
+   * @param req
+   */
   createRequestOption = (req?: any): HttpParams => {
     let options: HttpParams = new HttpParams();
 
+    // If the entered value is not null or undefined, it is added to the options.
     if (req) {
       Object.keys(req).forEach(key => {
         if (!this.isNullOrUndefined(req[key]) && !this.isEmptyArray(req[key]) && key !== 'sort') {
@@ -66,6 +71,7 @@ export class UIHelperService {
         }
       });
 
+      // If the entered value is an array, it is added to the options.
       if (req.sort) {
         req.sort.forEach((val: string) => {
           options = options.append('sort', val);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ICategory } from '../../category/category.model';
 import { UIHelperService } from '../../../core/service/uihelper.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,19 +6,19 @@ import { IAuthor } from '../author.model';
 import { AuthorService } from '../service/author.service';
 import { ConfirmationDialogComponent } from '../../../core/component/confirmation-dialog/confirmation-dialog.component';
 import { AuthorUpdateDialogComponent } from '../update/author-update-dialog.component';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-author',
   templateUrl: './author.component.html',
   styleUrls: ['./author.component.scss']
 })
-export class AuthorComponent implements OnInit {
+export class AuthorComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   authors: IAuthor[] = [];
   displayedColumns: string[] = ['id', 'avatar', 'name', 'surname', 'actions'];
-
+  private readonly unsubscriptionGetData$ = new Subject();
 
   constructor(
     private authorService: AuthorService,
@@ -31,10 +31,18 @@ export class AuthorComponent implements OnInit {
     this.load();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscriptionGetData$.next(null);
+    this.unsubscriptionGetData$.complete();
+  }
+
   load(): void {
     this.isLoading = true;
     this.authorService.query()
-      .pipe(finalize(() => (this.isLoading = false)))
+      .pipe(
+        finalize(() => (this.isLoading = false)),
+        takeUntil(this.unsubscriptionGetData$)
+      )
       .subscribe({
         next: (res) => {
           if (res.body !== null && res.body !== undefined) {

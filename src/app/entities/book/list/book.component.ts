@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UIHelperService } from '../../../core/service/uihelper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BookService } from '../service/book.service';
 import { IBook } from '../book.model';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { ConfirmationDialogComponent } from '../../../core/component/confirmation-dialog/confirmation-dialog.component';
 import { BookUpdateDialogComponent } from '../update/book-update-dialog.component';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -17,19 +17,17 @@ import { PageEvent } from '@angular/material/paginator';
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.scss']
 })
-export class BookComponent implements OnInit {
+export class BookComponent implements OnInit, OnDestroy {
   isLoading = false;
   books: IBook[] = [];
   categories: ICategory[] = [];
   currentView: 'card' | 'table' = 'card';
-
-  displayedColumns: string[] = ['id', 'coverImage', 'title', 'author', 'category', 'actions'];
-  // @ts-ignore
-  searchForm: FormGroup;
+  searchForm: FormGroup | undefined;
   totalItems: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = ITEMS_PER_PAGE;
   pageSizeOptions: number[] = ITEMS_VIEW_CONTENT_COUNT;
+  private readonly unsubscriptionGetData$ = new Subject();
 
   constructor(
     private bookService: BookService,
@@ -45,14 +43,19 @@ export class BookComponent implements OnInit {
     this.load();
     this.fetchCategories();
 
-    this.searchForm.get('category')?.valueChanges.subscribe((value) => {
+    this.searchForm?.get('category')?.valueChanges.subscribe((value) => {
       this.load();
     });
   }
 
+  ngOnDestroy(): void {
+    this.unsubscriptionGetData$.next(null);
+    this.unsubscriptionGetData$.complete();
+  }
+
   load(): void {
     this.isLoading = true;
-    const searchData = this.searchForm.getRawValue();
+    const searchData = this.searchForm?.getRawValue();
     const req = {
       categoryId: searchData.category?.id ? searchData.category.id : null
     }
@@ -61,7 +64,10 @@ export class BookComponent implements OnInit {
       page: this.currentPage,
       limit: this.itemsPerPage,
     })
-      .pipe(finalize(() => this.isLoading = false))
+      .pipe(
+        finalize(() => this.isLoading = false),
+        takeUntil(this.unsubscriptionGetData$)
+      )
       .subscribe({
         next: (res) => {
           if (res.body !== null && res.body !== undefined) {
@@ -119,6 +125,7 @@ export class BookComponent implements OnInit {
 
   fetchCategories(): void {
     this.categoryService.query()
+      .pipe(takeUntil(this.unsubscriptionGetData$))
       .subscribe({
         next: (res) => {
           if (res.body !== null && res.body !== undefined) {
